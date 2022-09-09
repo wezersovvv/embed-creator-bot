@@ -9,3 +9,6 @@ version 1.1
 
 - add test command
 - add private voice channels
+
+version 1.2
+- add server info command
