@@ -570,5 +570,5 @@ async def edit_error(ctx, error):
         await ctx.send(f'Вы не указали аргументы, {ctx.author.mention}\nВозможный способ использование:\n```{prefix}edit <optional $ch ChannelID> messageID <&t | &d | &url | &c | &thumb | &image | &f | &a>\n$t для заглавы. Пример: $t Test Title\n$d для описания. Пример: $d Test Desc\n$url ссылка. Пример: $url Url\n$c цвет Hex. Пример: $c #111111\n$thumb Thumbnail. Пример: $thumb Url\nПример: {prefix}edit 620317365921513485 $t A gay title!```') 
 
 
-
+#Paste token from discord.com
 bot.run('token') 
