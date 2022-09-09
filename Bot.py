@@ -76,6 +76,31 @@ async def muteall(ctx,member:discord.Member,time,*,reason=None):
     await ctx.send(f'{member.mention}, вы были размучены по истечению времени во всех каналах.')
 
 @bot.command()
+async def server(ctx):
+    name = str(ctx.guild.name)
+    description = str(ctx.guild.description)
+
+    owner = str(ctx.guild.owner)
+    id = str(ctx.guild.id)
+    region = str(ctx.guild.region)
+    memberCount = str(ctx.guild.member_count)
+
+    icon = str(ctx.guild.icon_url)
+
+    embed = discord.Embed(
+        title=name + " Server Information",
+        description=description,
+        color=discord.Color.blue()
+    )
+    embed.set_thumbnail(url=icon)
+    embed.add_field(name="Владелец сервера:", value=owner, inline=True)
+    embed.add_field(name="ID сервера:", value=id, inline=True)
+    embed.add_field(name="Регион:", value=region, inline=True)
+    embed.add_field(name="Количество участников", value=memberCount, inline=True)
+
+    await ctx.send(embed=embed)
+
+@bot.command()
 @commands.has_permissions(view_audit_log=True)
 async def mutechannel(ctx, member:discord.Member, channel:discord.TextChannel, time, *, reason):
     await channel.set_permissions(member, send_messages=False)
