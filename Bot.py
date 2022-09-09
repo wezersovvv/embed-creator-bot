@@ -1,3 +1,5 @@
+# version 1.1
+
 import discord 
 import discord.ext
 from discord import File
@@ -25,12 +27,31 @@ PREFIX = r'!'
 bot = commands.Bot(command_prefix=PREFIX)
     
 
-
+@bot.command(pass_context=True)
+async def test(ctx, title, descript, image, thumb):
+    embed = discord.Embed(title=title, description=descript, color = 0x2f3136)
+    embed.set_image(url = image)
+    embed.set_thumbnail(url = thumb)
+    embed.set_footer(text="wezersovvv#9439")
+    embed.set_author(name=ctx.author,icon_url=ctx.author.avatar_url)
+    await ctx.send(embed = embed)
 
 @bot.command(pass_context=True)
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(view_audit_log=True)
 async def clear(ctx, amount: int):
         deleted = await ctx.message.channel.purge(limit=amount + 1)
+
+@bot.event
+async def on_voice_state_update(member,before,after):
+    if after.channel.id == 833262954022830090:#вставьте свой айди канала
+        mainCategory = discord.utils.get(member.guild.categories, id=833262856522301460)#вставьте свой айди группы каналов
+        channel2 = await member.guild.create_voice_channel(name = f"Канал {member.display_name}", category = mainCategory)
+        await member.move_to(channel2)
+        await channel2.set_permissions(member, mute_members=True, move_members=True, manage_channels=True)
+        def check(a,b,c):
+            return len(channel2.members) == 0
+        await bot.wait_for('voice_state_update',check=check)
+        await channel2.delete()
 
 @bot.command()
 @commands.has_permissions(view_audit_log=True)
@@ -95,11 +116,6 @@ async def unban(ctx, *, member):
     await ctx.send(f"{user} разбанен!")
     return
 
-from discord import Activity, ActivityType
-
-
-
-
 @bot.event
 async def on_command_error(ctx, exception):
 
@@ -124,7 +140,7 @@ async def clear_error(ctx, error):
 @bot.event
 async def on_ready():
     guilds = await bot.fetch_guilds(limit = None).flatten()
-    await bot.change_presence(status = discord.Status.online, activity= discord.Activity(name=f'github.com', type= discord.ActivityType.watching))
+    await bot.change_presence(status = discord.Status.online, activity= discord.Activity(name=f'github.com/wezersovvv', type= discord.ActivityType.watching))
     print(f'Бот запущен на {len(guilds)} серверах')
     
     
